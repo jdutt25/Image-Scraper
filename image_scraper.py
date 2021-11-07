@@ -42,9 +42,6 @@ def getImageUrl(keyword):
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')  
     
-
-    #path = r'C:\Users\jessj\chromedriver.exe'
-
     driver = webdriver.Chrome(chrome_options= options)
 
     driver.get("https://www.bing.com/images")                           # go to Bing images
