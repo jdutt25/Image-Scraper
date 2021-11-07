@@ -1,0 +1,1 @@
+Image scraping service that receives a json object where the value is the words to search via POST request and and returns the URL of an image that fits the keywords.
