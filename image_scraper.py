@@ -8,6 +8,7 @@ from selenium import webdriver
 from flask import request 
 from flask import Flask
 import json
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -24,6 +25,7 @@ def postmethod():
 
 def getImageUrl(keyword):
     print('KEYWORD', keyword)
+    
 
     searchWords = ""
 
@@ -38,9 +40,11 @@ def getImageUrl(keyword):
     from selenium.webdriver.chrome.options import Options
 
     # use headless browser to prevent browser pop up
+
     options = Options()
-    options.add_argument('--headless')
-    options.add_argument('--disable-gpu')  
+    #options.add_argument('--headless')
+    #options.add_argument('--disable-gpu')
+    options.add_argument('--window-size=1920,1080')  
     
     driver = webdriver.Chrome(chrome_options= options)
 
@@ -54,15 +58,22 @@ def getImageUrl(keyword):
     images = lst.find_elements_by_tag_name("li")
 
     images[0].click()                                                   # first image
+    driver.implicitly_wait(10)
+                            
+    response = requests.get(driver.current_url  )                       # use beautiful soup to obtain image url
+    
+    soup = BeautifulSoup(response.text, 'html.parser')
+    img_tags = soup.find_all('img')
 
-    image_url = driver.current_url    
+    urls = [img['src'] for img in img_tags]
+    image_url = urls[0]
 
-    driver.close()                                                      # close driver
 
-    return image_url
+    driver.close()    
 
+    return ''+image_url
 
 if __name__ == '__main__':
     app.run()
 
-    
+#print(getImageUrl("good company novel"))
