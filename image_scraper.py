@@ -1,7 +1,3 @@
-# Jessica Dutton
-# OSU CS 361
-# Image Scraping Service
-
 import requests
 from requests.api import get
 from selenium import webdriver
@@ -11,7 +7,6 @@ import json
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
-
 
 @app.route('/postmethod', methods=['POST'])
 
