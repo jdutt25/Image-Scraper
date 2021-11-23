@@ -16,17 +16,16 @@ app = Flask(__name__)
 @app.route('/postmethod', methods=['POST'])
 
 def postmethod():
+    # receives post request
     data = request.get_json()
     data = json.loads(data)
-    print ('DATA', data)
     for i in data:
         key = i
     return getImageUrl(data[key])
 
 def getImageUrl(keyword):
-    print('KEYWORD', keyword)
-    
-
+    # returns image URL for given keyword
+ 
     searchWords = ""
 
     if keyword == [""] or keyword == [" "] or not keyword:
@@ -39,11 +38,7 @@ def getImageUrl(keyword):
 
     from selenium.webdriver.chrome.options import Options
 
-    # use headless browser to prevent browser pop up
-
     options = Options()
-    #options.add_argument('--headless')
-    #options.add_argument('--disable-gpu')
     options.add_argument('--window-size=1920,1080')  
     
     driver = webdriver.Chrome(chrome_options= options)
@@ -75,5 +70,3 @@ def getImageUrl(keyword):
 
 if __name__ == '__main__':
     app.run()
-
-#print(getImageUrl("good company novel"))
